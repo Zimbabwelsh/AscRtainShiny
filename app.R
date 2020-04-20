@@ -65,7 +65,7 @@ ui <- dashboardPage(
                        sliderInput(inputId = "num8", label = "by_range", 
                                    value=c(-0.2,0.2), min=-0.5, max=0.5),
                        sliderInput(inputId = "num9", label = "bay_range",
-                                   value=c(0,0.1), min=0, max=1)
+                                   value=c(0,0), min=0, max=1)
                        ),
               mainPanel(
                 fluidRow(column(6, plotOutput("scatter", width="750px", height="600px"))),
