@@ -4,6 +4,6 @@ To run:
 
 ```r
 remotes::install_github("explodecomputer/AscRtain")
-install.packages("shiny", "shinydashboard")
+install.packages(c("shiny", "shinydashboard"))
 shiny::runGitHub("Zimbabwelsh/AscRtainShiny")
 ```
