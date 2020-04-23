@@ -41,38 +41,52 @@ ui <- dashboardPage(
                   Similarly for self-reporting, commonly collected by phone app, individuals with greater levels of health anxiety may be more likely to be in the sample. If we estimate
                   population associations based on these ascertained values under collider bias we are likely to bias our results.",
                   br(), br(), 
-                  "Functionally this presents a problem as we are unable to know what the true effect of covariates on sample participation
-                  are with certainty. However, given known population values for exposure and outcome, we can estimate possible selection 
-                  effects which may give rise to observed outcomes under a true null. Depending on the range of values which are returned by 
+                  "Functionally this presents a problem as we cannot know what the true effect of covariates on sample participation.
+                  However, given known population values for exposure and outcome, we can estimate possible selection 
+                  effects which would give rise to observed outcomes under a true null. Depending on the range of values which are returned by 
                   consideration, this can allow us to make more informed inference about the possible bias in our estimated associations."),
               
               box(
-                h4("Collider Bias in COVID-19"), 
+                h4("Collider Bias and COVID-19"), br(),
                     tags$img(src = "COVID Colliders.png",
-                       width = "700px", height = "300px")
+                       width = "750px", height = "300px")
                     ),
               
               box(h4("References"),
                   p("Groenwold et al. 2020, 'Conditioning on a mediator to adjust for unmeasured confounding',  OSF Preprint"),
                   a(href="https://osf.io/vrcuf", "https://osf.io/vrcuf"),
                   br(), br(),
+                  
                   p("AscRtain documentation on Github"),
                   a(href="github.com/explodecomputer/AscRtain", "github.com/explodecomputer/AscRtain"))),
       tabItem(tabName="second",
               fluidRow(
-                column(2, p("This shiny app demonstrates some of the functional",
-                                 "utility of the", strong("AscRtain"), " R Package. The function",
-                                 "here explores the possible parameter space which",
-                                 "could give rise to an observed OR between exposure",
-                                 "and outcome. This plots the possible selection effects",
-                                 "(entered as BA and BY) which could give rise to an",
-                                 "observed OR under a true known OR of 1.")),
+                column(3, p("This calculation demonstrates some of the functional",
+                            "utility of the", strong("AscRtain"), " R Package. The", strong("parameter_space()"),
+                            "function simulates values over the possible parameter space for selection into a study which",
+                            "could give rise to an observed OR between exposure",
+                            "and outcome. This plots the possible selection effects",
+                            "(entered as BA and BY) which could give rise to an",
+                            "observed odds ratio (OR) under a true known OR of 1."),
+                            br(),
+                            p("The", em("population parameters"), "here are defined as follows:", br(),
+                              strong("P(S=1)"), "denotes the proportion of the population that is in the sample.", br(), 
+                              strong("P(A=1)"), "denotes the proportion of the population for whom the exposure A is true.", br(),
+                              strong("P(Y=1)"), "denotes the proportion of the population for whom the outcome Y is true.", br(), 
+                              strong("P(A=1 & Y=1)"), "denotes the proportion of the population for whom A and Y are both true.", br(), br(),
+                              "The", em("selection effects"),  "are defined as follows:", br(),
+                              strong("b0"), "is the baseline probability of being selected into the sample.", br(), 
+                              strong("ba"),"is the effect on selection into the sample given A=1 is true.", br(),
+                              strong("by"),"is the effect on selection into the sample given Y=1 is true.", br(),
+                              strong("bay"),"is the effect on selection into the sample given A=1 and Y=1 are both true."
+                              )),
+                
                 column(3, h5("Observed Relationship"),
                        sliderInput(inputId="num1", label = "Observed OR",
                        value=2, min=0, max=10, step=0.01),
                        br(),
-                       sliderInput(inputId="num10", label = "Granularity", 
-                       value=100, min=10, max=200)
+                       sliderInput(inputId="num10", label = "Unique Parameter Combinations (millions)", 
+                       value=5, min=1, max=10)
                        ),
                 column(3, h5("Population Parameters"),
                        sliderInput(inputId="num2", label = "P(S=1)",
@@ -95,7 +109,7 @@ ui <- dashboardPage(
                                    value=c(0,0), min=0, max=1)
                        ),
               mainPanel(
-                fluidRow(column(6, withSpinner(plotOutput("scatter", width="750px", height="600px"), type=4)))
+                fluidRow(column(12, align="center", withSpinner(plotOutput("scatter", width="750px", height="600px"), type=4)))
               ))),
       tabItem(tabName="third",
               h2("Documentation"),br(), br(),
@@ -119,13 +133,13 @@ server <- function(input, output) {
   
   output$scatter <- renderPlot({
     
-#    get_granularity <- function(target, b0_range, ba_range, by_range, bay_range)
-#    {n <- sapply(c(b0_range, ba_range, by_range, bay_range), 
-#                 function(x) length(x) > 1 %>% sum	target = gran^n
-#                 
-#                 granularity <- target^(1/n)
-#                 return(granularity)
-#    }
+    get_granularity <- function(target, b0_range, ba_range, by_range, bay_range)
+    {
+      n <- sapply(list(b0_range, ba_range, by_range, bay_range), function(x) x[1] != x[2]) %>% sum
+      granularity <- target^(1/n)
+      return(granularity)
+    }
+    
     
     x <- VBB$new()
     x$parameter_space(
@@ -138,23 +152,7 @@ server <- function(input, output) {
            ba_range=input$num7, 
            by_range=input$num8, 
            bay_range=input$num9, 
-           granularity=input$num10
-           #granularity=get_granularity
-           
-           #granularity=input$num10
-           
-           
-           #
-           
-           #granularity = number of values in the range of b0, ba, by, bay
-           # say given number of values to simulate over. if b0, ba, by populated
-           # then there are 100*100*100 values to simulate, if bay range is populated
-           # then increases by a factor of 100 - meaning that simulation can become
-           # very slow.
-           # create a line of code that calculates the most effective granularity 
-           # that maximises estimates whilst maintaining computational ease.
-           # 1,000,000 parameter estimates runs quickly, 100,000,000 does not.
-           # Aim for computational efficiency of 5,000,000 parameter combinations
+           granularity=get_granularity((input$num10)*1000000, b0_range, ba_range, by_range, bay_range)
       )
     x$scatter()
     })
