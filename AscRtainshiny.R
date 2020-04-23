@@ -96,7 +96,7 @@ ui <- dashboardPage(
                        ),
               mainPanel(
                 fluidRow(column(6, withSpinner(plotOutput("scatter", width="750px", height="600px"), type=4)))
-              )),
+              ))),
       tabItem(tabName="third",
               h2("Documentation"),br(), br(),
               fluidRow(
@@ -107,7 +107,6 @@ ui <- dashboardPage(
               )
       )
     )
-  )
   )
 )
 
