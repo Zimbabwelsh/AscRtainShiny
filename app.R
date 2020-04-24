@@ -5,6 +5,13 @@ library(shiny)
 #remotes::install_github("explodecomputer/AscRtain")
 library(AscRtain)
 
+get_granularity <- function(target, b0_range, ba_range, by_range, bay_range)
+{
+  n <- sapply(list(b0_range, ba_range, by_range, bay_range), function(x) x[1] != x[2]) %>% sum
+  granularity <- target^(1/n)
+  return(round(granularity))
+}
+
 
 ui <- dashboardPage(
   dashboardHeader(title="Using AscRtain"),
@@ -45,7 +52,7 @@ ui <- dashboardPage(
                        value=2, min=0, max=10, step=0.01),
                        br(),
                        sliderInput(inputId="num10", label = "Granularity", 
-                       value=100, min=10, max=200)
+                       value=1000000, min=1000000, max=10000000)
                        ),
                 column(3, h5("Population Parameters"),
                        sliderInput(inputId="num2", label = "P(S=1)",
@@ -84,6 +91,8 @@ server <- function(input, output) {
   
   output$scatter <- renderPlot({
     
+    gran <- get_granularity(input$num10, input$num6, input$num7, input$num8, input$num9)
+    print(gran)
     x <- VBB$new()
     x$parameter_space(
            target_or=input$num1, 
@@ -95,7 +104,7 @@ server <- function(input, output) {
            ba_range=input$num7, 
            by_range=input$num8, 
            bay_range=input$num9, 
-           granularity=input$num10
+           granularity=gran
       )
     x$scatter()
     })
