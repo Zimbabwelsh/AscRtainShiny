@@ -21,16 +21,16 @@ ui <- dashboardPage(
 dashboardSidebar(
   sidebarMenu(
     menuItem("Theory", tabName="first", icon = icon("book-reader")),
-    menuItem("Estimation", tabName="second", icon=icon("calculator")),
-    menuItem("Documentation", tabName="third", icon=icon("file-code"))
+    menuItem("Estimation", tabName="second", icon=icon("calculator"))
   )
 ),
 
 dashboardBody(
   tabItems(
     tabItem(tabName="first", 
-            h2("Theoretical Motivation for Considering Collider Bias"),
-            box("Consider the scenario in which we want to test if a given exposure influences an outcome. Consider also 
+            column(5,(verticalLayout(
+                   h2("Theoretical Motivation for Considering Collider Bias"),br(),
+                   box(width=12,"Consider the scenario in which we want to test if a given exposure influences an outcome. Consider also
                 that these two variables both independently cause a third variable. Conditioning on the third variable
                 will induce a relationship betweeen the exposure and outcome. This is known as", strong("Ascertainment Bias"), "or", strong("Collider Bias."),  
                 "Whilst it is largely acknowledged that sampling bias may affect representativeness of study findings, it is less
@@ -52,31 +52,41 @@ dashboardBody(
                 However, given known population values for exposure and outcome, we can estimate possible selection 
                 effects which would give rise to observed outcomes under a true null. Depending on the range of values which are returned by 
                 consideration, this can allow us to make more informed inference about the possible bias in our estimated associations."),
-            
-            box(
-              h5("Collider Bias and COVID-19"),
-              tags$img(src = "COVID Colliders.png",
-                       width = "750px", height = "300px")
-            ),
-            
-            box(h4("Key References"),
-                p("Biorxiv Preprint link"),a(href="github.com/explodecomputer/AscRtain", "github.com/explodecomputer/AscRtain"),
-                br(),br(),
-                p("Munafo, Marcus R., Kate Tilling, Amy E. Taylor, David M. Evans, and George Davey Smith. 2018. 'Collider Scope: When Selection Bias Can Substantially Influence Observed Associations.' International Journal of Epidemiology 47 (1): 226-35."),
-                a(href="https://doi.org/10.1093/ije/dyx206", "https://doi.org/10.1093/ije/dyx206"),
-                br(),br(),
-                p("Elwert, Felix, and Christopher Winship. 2014. 'Endogenous Selection Bias: The Problem of Conditioning on a Collider Variable.' Annual Review of Sociology 40 (July): 31-53."),
-                a(href="https://doi.org/10.1146/annurev-soc-071913-043455", "https://doi.org/10.1146/annurev-soc-071913-043455"),
-                br(),br(),
-                p("Cole, Stephen R., Robert W. Platt, Enrique F. Schisterman, Haitao Chu, Daniel Westreich, David Richardson, and Charles Poole. 2010. 'Illustrating Bias due to Conditioning on a Collider.' International Journal of Epidemiology 39 (2): 417-20."),
-                a(href="https://doi.org/10.1093/ije/dyp334", "https://doi.org/10.1093/ije/dyp334"),
-                br(),br(),
-                p("Groenwold, Rolf H. H., Tom M. Palmer, Kate Tilling. 2020. 'Conditioning on a mediator to adjust for unmeasured confounding',  OSF Preprint"),
-                a(href="https://osf.io/vrcuf", "https://osf.io/vrcuf")
+                br(), 
+            box(width=12,h4("Development"), 
+                "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "to illustrate the functionality of the",
+                a(href="github.com/explodecomputer/AscRtain", "R Package"), tags$code("AscRtain"), "developed by", a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
+                "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer.")
+                )
+            )
             )
     ),
+            column(6,verticalLayout(br(),br(),
+                   box(width=12,
+                     h5( "Collider Bias and COVID-19", align="center"),
+                     tags$img(src = "COVID Colliders.png",
+                              width = "740px", height = "280px"),
+                     "Arrows indicate effects of A (exposure) and Y (outcome) on selection into sample. Dashed lines indicate an induced correlation by conditioning on the sample."
+                     ),
+                   box(width=12,h4("Key References"),
+                       p("Biorxiv Preprint link"),a(href="github.com/explodecomputer/AscRtain", "github.com/explodecomputer/AscRtain"),
+                       br(),br(),
+                       p("Munafo, Marcus R., Kate Tilling, Amy E. Taylor, David M. Evans, and George Davey Smith. 2018.", a(href="https://doi.org/10.1093/ije/dyx206", "Collider Scope: When Selection Bias Can Substantially Influence Observed Associations."), "International Journal of Epidemiology 47 (1): 226-35."),
+                       br(),
+                       p("Smith LH, and VanderWeele TJ.", a(href="https://doi:10.1097/EDE.0000000000001032", "Bounding bias due to selection."), "Epidemiology. 2019;30(4):509-516.", br(), 
+                         "Associated Sensitivity Analysis for Selection Bias",a(href="https://selection-bias.herokuapp.com", "website.")),
+                       br(),
+                       p("Elwert, Felix, and Christopher Winship. 2014.", a(href="https://doi.org/10.1146/annurev-soc-071913-043455","Endogenous Selection Bias: The Problem of Conditioning on a Collider Variable."), "Annual Review of Sociology 40 (July): 31-53."),
+                       br(),
+                       p("Cole, Stephen R., Robert W. Platt, Enrique F. Schisterman, Haitao Chu, Daniel Westreich, David Richardson, and Charles Poole. 2010.", a(href="https://doi.org/10.1093/ije/dyp334","Illustrating Bias due to Conditioning on a Collider."), "International Journal of Epidemiology 39 (2): 417-20."),
+                       br(),
+                       p("Groenwold, Rolf H. H., Tom M. Palmer, Kate Tilling. 2020.", a(href="https://osf.io/vrcuf", "Conditioning on a mediator to adjust for unmeasured confounding"),  "OSF Preprint")
+                   )
+            ))
+    ),
+
     tabItem(tabName="second",
-            fluidRow(
+            fluidRow(h2("Estimating over a plausible parameter space", align="center"),br(),
               column(3, p("This calculation demonstrates some of the functional",
                           "utility of the", strong("AscRtain"), " R Package. The", strong("parameter_space()"),
                           "function simulates values over the possible parameter space for selection into a study which",
@@ -126,23 +136,13 @@ dashboardBody(
               ),
               mainPanel(
                 fluidRow(column(12, align="center", withSpinner(plotOutput("scatter", width="750px", height="600px"), type=4)))
-              ))),
-    tabItem(tabName="third",
-            h2("Documentation"),br(), br(),
-            fluidRow(
-              box(column(4,p("BioRxiv Preprint"),
-                         br(), br(),
-                         p("AscRtain documentation on Github"),
-                         a(href="github.com/explodecomputer/AscRtain", "github.com/explodecomputer/AscRtain"),
-                         br(),br(),
-                         p("AscRtain Shiny App source code"),
-                         a(href="github.com/Zimbabwelsh/AscRtainShiny", "github.com/Zimbabwelsh/AscRtainShiny"),
-                         
-              ))
+              )
+              )
             )
     )
-  )
-))
+)
+)
+
 
 server <- function(input, output) {
   
