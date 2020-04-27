@@ -24,8 +24,10 @@ dashboardSidebar(
 ),
 
 dashboardBody(
+  
   tabItems(
-    tabItem(tabName="first", 
+    tabItem(
+      tabName="first", 
             column(5,(verticalLayout(
                    h2("Theoretical Motivation for Considering Collider Bias"),br(),
                    box(width=12,"Consider the scenario in which we want to test if a given exposure influences an outcome. Consider also
@@ -44,7 +46,7 @@ dashboardBody(
                 datasets as conditional on exposures of interest within the data. We know that COVID testing is already non-random within the
                 population, pre-existing conditions, key worker employment and healthcare accessibility are all likely to predict entry into the sample.
                 Similarly for self-reporting, commonly collected by phone app, individuals with greater levels of health anxiety may be more likely to be in the sample. If we estimate
-                population associations based on these ascertained values under collider bias we are likely to bias our results.",
+                population associations based on these ascertained values under collider bias then our results and causal conclusions may also be biased.",
                 br(), br(), 
                 "Functionally this presents a problem as we cannot know what the true effect of covariates on sample participation.
                 However, given known population values for exposure and outcome, we can estimate possible selection 
@@ -52,14 +54,17 @@ dashboardBody(
                 consideration, this can allow us to make more informed inference about the possible bias in our estimated associations."),
                 br(), 
             box(width=12,h4("Development"), 
-                "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "to illustrate the functionality of the",
+                "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
+                to the BioRxiv preprint", a(href="github.com/explodecomputer/AscRtain", "'Preprint title'"), "by Hemani et al. 2020.",
+                br(), br(),
+                "The app highlights some of the functionality of the",
                 a(href="github.com/explodecomputer/AscRtain", "R Package"), tags$code("AscRtain"), "developed by", a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
                 "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer.")
                 )
             )
             )
     ),
-            column(6,verticalLayout(br(),br(),
+            column(6,verticalLayout(br(),
                    box(width=12,
                      h5( "Collider Bias and COVID-19", align="center"),
                      tags$img(src = "COVID Colliders.png",
@@ -67,11 +72,13 @@ dashboardBody(
                      "Arrows indicate effects of A (exposure) and Y (outcome) on selection into sample. Dashed lines indicate an induced correlation by conditioning on the sample."
                      ),
                    box(width=12,h4("Key References"),
-                       p("Biorxiv Preprint link"),a(href="github.com/explodecomputer/AscRtain", "github.com/explodecomputer/AscRtain"),
-                       br(),br(),
                        p("Munafo, Marcus R., Kate Tilling, Amy E. Taylor, David M. Evans, and George Davey Smith. 2018.", a(href="https://doi.org/10.1093/ije/dyx206", "Collider Scope: When Selection Bias Can Substantially Influence Observed Associations."), "International Journal of Epidemiology 47 (1): 226-35."),
                        br(),
-                       p("Smith LH, and VanderWeele TJ.", a(href="https://doi:10.1097/EDE.0000000000001032", "Bounding bias due to selection."), "Epidemiology. 2019;30(4):509-516.", br(), 
+                       p("Miguel Angel Luque-Fernandez, Michael Schomaker, Daniel Redondo-Sanchez, Maria Jose Sanchez Perez, Anand Vaidya, Mireille E Schnitzer. 2019.", a(href="https://academic.oup.com/ije/article/48/2/640/5248195", "Educational Note: Paradoxical collider effect in the analysis of non-communicable disease epidemiological data: a reproducible illustration and web application"),
+                       "International Journal of Epidemiology, 48(2): 640-653.", "Associated Educational CollideR", a(href="https://watzilei.com/shiny/collider/", "app.")),
+                       br(),
+                       p("Smith LH, and VanderWeele TJ. 2019.", a(href="https://doi:10.1097/EDE.0000000000001032", "Bounding bias due to selection."), "Epidemiology. 30(4): 509-516.", 
+                       br(), 
                          "Associated Sensitivity Analysis for Selection Bias",a(href="https://selection-bias.herokuapp.com", "website.")),
                        br(),
                        p("Elwert, Felix, and Christopher Winship. 2014.", a(href="https://doi.org/10.1146/annurev-soc-071913-043455","Endogenous Selection Bias: The Problem of Conditioning on a Collider Variable."), "Annual Review of Sociology 40 (July): 31-53."),
