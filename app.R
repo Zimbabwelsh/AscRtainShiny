@@ -54,12 +54,12 @@ dashboardBody(
                 consideration, this can allow us to make more informed inference about the possible bias in our estimated associations."),
                 br(), 
             box(width=12,h4("Development"), 
+                "This app highlights some of the functionality of the",
+                a(href="github.com/explodecomputer/AscRtain", "R Package"), tags$code("AscRtain"), "developed by", a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
+                "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer."),
+                br(), br(),
                 "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
                 to the BioRxiv preprint", a(href="github.com/explodecomputer/AscRtain", "'Preprint title'"), "by Hemani et al. 2020.",
-                br(), br(),
-                "The app highlights some of the functionality of the",
-                a(href="github.com/explodecomputer/AscRtain", "R Package"), tags$code("AscRtain"), "developed by", a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
-                "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer.")
                 )
             )
             )
