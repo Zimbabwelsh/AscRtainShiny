@@ -41,28 +41,29 @@ dashboardBody(
                    ))
                    ),
             column(6,br(),
-                   box(width=12,"Consider the scenario in which we want to test if a given exposure influences an outcome. Consider also
-                that these two variables both independently cause a third variable. Conditioning on the third variable
-                will induce a relationship betweeen the exposure and outcome. This is known as", strong("Ascertainment Bias"), "or", strong("Collider Bias."),  
+                   box(width=12,"Consider the scenario in which we want to test if a given exposure \\((A)\\) influences an outcome \\((Y)\\). Consider also
+                that these two variables both independently cause a third variable \\((S)\\). Conditioning on \\(S\\)
+                will induce a relationship betweeen \\(A\\) and \\(Y\\). This is known as", strong("Ascertainment Bias"), "or", strong("Collider Bias."),  
                 "Whilst it is largely acknowledged that sampling bias may affect representativeness of study findings, it is less
-                well understood that conditioning on a collider may substantially bias the estimate of association between the exposure and outcome.",
-                br(),br(),
-                "Crucially for COVID-19 examples: if we consider this third variable to be", strong("selection into a study"), "then we are conditioning on it 
-                by solely considering study participants.", 
+                well understood that conditioning on a collider may substantially bias the estimated association between an exposure and outcome.",
                 br(), br(), 
-                em("Why is this currently particularly problematic in the analysis of COVID-19 data?"),
+                em("Why is this particularly problematic in the analysis of COVID-19 data?"),
+                br(),
+                "Because COVID-19 study participants are likely to be strongly non-random and if we consider \\(S\\) to be", strong("selection into a COVID-sample"), "then we condition on it
+                by solely considering study participants. More worryingly, it is likely that exposure and outcome both predict entry into the COVID-19 samples, meaning we are conditioning on a collider and will produce biased estimates.",
                 br(), br(),
-                "Let's consider two major current sources of COVID-19 data:", strong("COVID-19 case status"), "and", strong("self-reported voluntary data collection."),
-                "If we consider each of these in turn, there are relatively simple scenarios where we could imagine selection into these
-                datasets as conditional on exposures of interest within the data. We know that COVID testing is already non-random within the
-                population, pre-existing conditions, key worker employment and healthcare accessibility are all likely to predict entry into the sample.
-                Similarly for self-reporting, commonly collected by phone app, individuals with greater levels of health anxiety may be more likely to be in the sample. If we estimate
-                population associations based on these ascertained values under collider bias then our results and causal conclusions may also be biased.",
-                br(), br(), 
-                "Functionally this presents a problem as we cannot know what the true effect of covariates on sample participation.
+                "Take two major sources of COVID-19 data:", strong("COVID-19 cases"), "and", strong("voluntary self-report:"),
+                br(),br(),
+                "We know", em("COVID testing"), "is non-random in the population. Factors associated with this non-randomness
+                such as having pre-existing conditions, or being a key worker may plausibly predict both whether you receive a test", em("and"), "your risk of COVID-19.",
+                "Similarly for", em("self-reporting"), "individual health-anxiety may plausibly predict both whether you opt into data collection", em("and"), "your risk of COVID-19.",
+                br(),br(),
+                "If we estimate population associations based on these ascertained values our results and causal conclusions may also be biased.",
+                br(),  br(),
+                "Functionally this presents a problem as we cannot know the true effect of \\(A\\) and \\(Y\\) on sample participation.
                 However, given known population frequencies for exposure and outcome, we can estimate possible selection 
-                effects which would give rise to observed outcomes under a true null. Depending on the range of values which are returned by 
-                consideration, this can allow us to make more informed inference about the possible bias in our estimated associations."),
+                effects which would give rise to observed outcomes under a true null. Depending on the range of values returned
+                this allows us to make more informed inference about bias in our estimated associations."),
                 br(), 
             box(width=12,h4("Development"), 
                 "This app highlights some of the functionality of the",
@@ -70,7 +71,7 @@ dashboardBody(
                 "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer."),
                 br(), br(),
                 "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
-                to the BioRxiv preprint", a(href="github.com/explodecomputer/AscRtain", "'Preprint title'"), "by Hemani et al. 2020.",)
+                to the BioRxiv preprint", a(href="github.com/explodecomputer/AscRtain", "'Preprint title'"), "by Hemani et al. 2020.")
             )
             
     ),
