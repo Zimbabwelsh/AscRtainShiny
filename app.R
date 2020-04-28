@@ -35,10 +35,16 @@ dashboardBody(
                    h3("Theoretical Motivation for Considering Collider Bias", align="center"),br(),
                    box(width=12,
                        h4(em("Collider Bias and COVID-19"), align="center"),
-                       tags$img(src = "COVID Collider Vert.png",
-                                width = "530px"),br(),br(),
+                       tags$img(src = "AscRtain Vignettes.png", style="display: block; margin-left: auto; margin-right: auto;"),br(),br(),
                        em("Arrows indicate effects of exposure \\((A)\\) and outcome \\((Y)\\) on selection into sample. Dashed lines indicate an induced correlation by conditioning on the sample."
-                   ))
+                   )),
+                   box(width=12,h4("Development"), 
+                       "This app highlights some of the functionality of the",
+                       a(href="github.com/explodecomputer/AscRtain", "R Package"), tags$code("AscRtain"), "developed by", a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
+                       "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer."),
+                       br(), br(),
+                       "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
+                to the BioRxiv preprint", a(href="github.com/explodecomputer/AscRtain", "'Preprint title'"), "by Hemani et al. 2020.")
                    ),
             column(6,br(),
                    box(width=12,"Consider the scenario in which we want to test if a given exposure \\((A)\\) influences an outcome \\((Y)\\). Consider also
@@ -63,16 +69,8 @@ dashboardBody(
                 "Functionally this presents a problem as we cannot know the true effect of \\(A\\) and \\(Y\\) on sample participation.
                 However, given known population frequencies for exposure and outcome, we can estimate possible selection 
                 effects which would give rise to observed outcomes under a true null. Depending on the range of values returned
-                this allows us to make more informed inference about bias in our estimated associations."),
-                br(), 
-            box(width=12,h4("Development"), 
-                "This app highlights some of the functionality of the",
-                a(href="github.com/explodecomputer/AscRtain", "R Package"), tags$code("AscRtain"), "developed by", a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
-                "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer."),
-                br(), br(),
-                "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
-                to the BioRxiv preprint", a(href="github.com/explodecomputer/AscRtain", "'Preprint title'"), "by Hemani et al. 2020.")
-            )
+                this allows us to make more informed inference about bias in our estimated associations.")
+                )
             
     ),
 
@@ -88,8 +86,8 @@ dashboardBody(
                      and outcome (\\(\\beta_Y\\)) which could give rise to a user-defined observed
                      odds ratio (OR) under a true known OR of 1.",
                      br(),br(),
-                     "Population parameters are defined as follows:", 
-                     br(),
+                     em("Population parameters"), "are defined as follows:", 
+                     br(),br(),
                      "\\(P(S=1)\\) gives the proportion of the population that is in the sample.", 
                      br(),
                      "\\(P(A=1)\\) gives the proportion of the population for whom the exposure A is true",
@@ -98,9 +96,7 @@ dashboardBody(
                      br(),
                      "\\(P(A \\cap Y)\\) gives the proportion of the population for whom A and Y are both true.",
                      br(),br(),
-                     
-                     
-                    "Selection effects are defined as follows:",
+                     em("Selection effects"), "are defined as follows:",
                     br(),br(),
                     "\\(\\beta_0\\) is the baseline probability of being selected into the sample.",
                     br(),
