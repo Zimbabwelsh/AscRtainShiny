@@ -2,6 +2,7 @@ library(shinydashboard)
 library(shiny)
 library(shinycssloaders)
 library(dplyr)
+library(plotly)
 library(AscRtain)
 
 get_granularity <- function(target, b0_range, ba_range, by_range, bay_range)
@@ -136,11 +137,22 @@ dashboardBody(
                                  value=c(0,0), min=0, max=1)
               ),
               mainPanel(
-              fluidRow(column(12,
-                       conditionalPanel("input.num1 != 1",
-                                        withSpinner(plotOutput("scatter", width="750px", height="600px"))),
-                       em("Note: this plot will only render if the observed OR implies difference (OR!=1)")))))),
-                
+                        (column(12,
+                                em("Note: this plot will only render if the observed OR implies difference (OR!=1)"),
+                                conditionalPanel("input.num1 != 1",
+                                                 withSpinner(plotOutput("scatter", width="750px", height="600px"))),
+                                br(),
+                                "Estimated Parameter Combinations",
+                                verbatimTextOutput("params"),
+                                "Parameter Combinations plausibly giving rise to \\(P(S=1)\\)",
+                                verbatimTextOutput("pS"),
+                                "Parameter Combinations plausibly producing observed OR",
+                                verbatimTextOutput("or")
+                        ))
+              )
+            )
+    ),
+     
     tabItem(tabName = "third",
             h2("Useful Resources"),br(),
             column(5,
@@ -185,9 +197,9 @@ dashboardBody(
 server <- function(input, output) {
   
   output$scatter <- renderPlot({
-    
     gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, input$num8, input$num9)
     print(gran)
+    
     
     x <- VBB$new()
     x$parameter_space(
@@ -202,10 +214,16 @@ server <- function(input, output) {
            bay_range=input$num9, 
            granularity=gran
       )
+    output$params <- renderText(x$details$parameter_combinations)
+    output$pS <- renderText(x$details$within_ps_told)
+    output$or <-  renderText(x$details$beyond_or)
     
-    x$scatter()
+      x$scatter()
+    
     
   })
+  
+ 
 
 }
 
