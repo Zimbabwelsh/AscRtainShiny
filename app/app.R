@@ -1,9 +1,7 @@
 library(shinydashboard)
 library(shiny)
 library(shinycssloaders)
-library(dplyr)
 library(latex2exp)
-library(ggplot2)
 library(plotly)
 library(AscRtain)
 
@@ -221,7 +219,7 @@ server <- function(input, output) {
     output$or <-  renderText(x$details$beyond_or)
     
       z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by)) +
-              ggplot2::geom_point(ggplot2::aes(colour=b0)) + ggplot2::xlab("$\\beta_A$") +
+              ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) + ggplot2::xlab("$\\beta_A$") +
               ggplot2::ylab("$\\beta_Y$") + ggplot2::labs(colour= "beta_0")
       
     ggplotly(z)
