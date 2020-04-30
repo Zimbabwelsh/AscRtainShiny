@@ -2,6 +2,8 @@ library(shinydashboard)
 library(shiny)
 library(shinycssloaders)
 library(dplyr)
+library(latex2exp)
+library(ggplot2)
 library(plotly)
 library(AscRtain)
 
@@ -140,7 +142,7 @@ dashboardBody(
                         (column(12,
                                 em("Note: this plot will only render if the observed OR implies difference (OR!=1)"),
                                 conditionalPanel("input.num1 != 1",
-                                                 withSpinner(plotOutput("scatter", width="750px", height="600px"))),
+                                                 withSpinner(plotlyOutput("scatter", width="750px", height="600px"))),
                                 br(),
                                 "Estimated Parameter Combinations",
                                 verbatimTextOutput("params"),
@@ -195,8 +197,8 @@ dashboardBody(
 
 
 server <- function(input, output) {
-  
-  output$scatter <- renderPlot({
+  withMathJax()
+  output$scatter <- renderPlotly({
     gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, input$num8, input$num9)
     print(gran)
     
@@ -218,8 +220,11 @@ server <- function(input, output) {
     output$pS <- renderText(x$details$within_ps_told)
     output$or <-  renderText(x$details$beyond_or)
     
-      x$scatter()
-    
+      z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by)) +
+              ggplot2::geom_point(ggplot2::aes(colour=b0)) + ggplot2::xlab("$\\beta_A$") +
+              ggplot2::ylab("$\\beta_Y$") + ggplot2::labs(colour= "beta_0")
+      
+    ggplotly(z)
     
   })
   
