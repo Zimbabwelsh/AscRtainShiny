@@ -35,7 +35,7 @@ dashboardBody(
                    h3("Theoretical Motivation for Considering Collider Bias", align="center"),br(),
                    box(width=12,
                        h4(em("Collider Bias and COVID-19"), align="center"),
-                       tags$img(src = "AscRtain Vignettes.png", style="display: block; margin-left: auto; margin-right: auto;"),br(),br(),
+                       tags$img(src = "COVID Colliders Vert.png", style="display: block; margin-left: auto; margin-right: auto;"),br(),br(),
                        em("Arrows indicate effects of exposure \\((A)\\) and outcome \\((Y)\\) on selection into sample. Dashed lines indicate an induced correlation by conditioning on the sample."
                    )),
                    box(width=12,h4("Development"), 
@@ -136,9 +136,11 @@ dashboardBody(
                                  value=c(0,0), min=0, max=1)
               ),
               mainPanel(
-                fluidRow(column(12, align="center", withSpinner(plotOutput("scatter", width="750px", height="600px"), type=4)))
-              ))
-            ),
+              fluidRow(column(12,
+                       conditionalPanel("input.num1 != 1",
+                                        withSpinner(plotOutput("scatter", width="750px", height="600px"))),
+                       em("Note: this plot will only render if the observed OR implies difference (OR!=1)")))))),
+                
     tabItem(tabName = "third",
             h2("Useful Resources"),br(),
             column(5,
@@ -186,6 +188,7 @@ server <- function(input, output) {
     
     gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, input$num8, input$num9)
     print(gran)
+    
     x <- VBB$new()
     x$parameter_space(
            target_or=input$num1, 
@@ -199,8 +202,10 @@ server <- function(input, output) {
            bay_range=input$num9, 
            granularity=gran
       )
+    
     x$scatter()
-    })
+    
+  })
 
 }
 
