@@ -8,7 +8,7 @@ Install dependencies
 
 ```{r}
 remotes::install_github("explodecomputer/AscRtain")
-install.packages(c("dplyr","shiny", "shinydashboard", "shinycssloaders"))
+install.packages(c("dplyr","shiny", "shinydashboard", "shinycssloaders", "plotly", "latex2exp", "ggplot2"))
 ```
 
 Run from github:
