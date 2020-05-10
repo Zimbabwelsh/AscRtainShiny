@@ -45,7 +45,8 @@ dashboardBody(
                        "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer."),
                        br(), br(),
                        "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
-                to the BioRxiv preprint", a(href="github.com/explodecomputer/AscRtain", "'Preprint title'"), "by Hemani et al. 2020.")
+                        to the MedRxiv preprint", a(href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v1.full.pdf", "'Collider bias undermines our understanding of COVID-19 disease risk
+                        and severity.'"), "written with colleagues at the MRC-IEU, 2020.")
                    ),
             column(6,br(),
                    box(width=12,"Consider the scenario in which we want to test if a given exposure \\((A)\\) influences an outcome \\((Y)\\). Consider also
@@ -156,7 +157,12 @@ dashboardBody(
     tabItem(tabName = "third",
             h2("Useful Resources"),br(),
             column(5,
+                   box(width=12,
                    h4("Key References"),
+                   br(),
+                   p("Griffith, Gareth, Tim M. Morris, Matt Tudball, Annie Herbert, Giulia Mancano, Lindsey Pike, Gemma C. Sharp, Tom M. Palmer, George Davey Smith, Kate Tilling, Luisa Zuccolo, Neil M. Davies, and Gibran Hemani. 2020.", 
+                     a(href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v1.full.pdf", "Collider Bias undermines our understanding of COVID-19 disease risk and severity."), "MedRxiv Preprint"),
+                   br(),
                    p("Munafo, Marcus R., Kate Tilling, Amy E. Taylor, David M. Evans, and George Davey Smith. 2018.", a(href="https://doi.org/10.1093/ije/dyx206", "Collider Scope: When Selection Bias Can Substantially Influence Observed Associations."), "International Journal of Epidemiology 47 (1): 226-35."),
                    br(),
                    p("Miguel Angel Luque-Fernandez, Michael Schomaker, Daniel Redondo-Sanchez, Maria Jose Sanchez Perez, Anand Vaidya, Mireille E Schnitzer. 2019.", a(href="https://academic.oup.com/ije/article/48/2/640/5248195", "Educational Note: Paradoxical collider effect in the analysis of non-communicable disease epidemiological data: a reproducible illustration and web application"),
@@ -169,8 +175,9 @@ dashboardBody(
                    p("Cole, Stephen R., Robert W. Platt, Enrique F. Schisterman, Haitao Chu, Daniel Westreich, David Richardson, and Charles Poole. 2010.", a(href="https://doi.org/10.1093/ije/dyp334","Illustrating Bias due to Conditioning on a Collider."), "International Journal of Epidemiology 39 (2): 417-20."),
                    br(),
                    p("Groenwold, Rolf H. H., Tom M. Palmer, Kate Tilling. 2020.", a(href="https://osf.io/vrcuf", "Conditioning on a mediator to adjust for unmeasured confounding"),  "OSF Preprint")
-            ),
+            )),
             column(5,
+                   box(width=12,
                    h4("Pedagogical Resources"),
                    "The following apps give an informative introduction to collider bias in observational data, and allow the user to explore possible relationships.",
                    br(), br(),
@@ -188,7 +195,7 @@ dashboardBody(
                    br(),
                    tags$code("simMixedDAG"), a(href="https://github.com/IyarLin/simMixedDAG", "R Package"))
                    )
-                   )
+                   ))
             )
     )
 
