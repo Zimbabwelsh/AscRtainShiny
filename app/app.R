@@ -225,11 +225,15 @@ server <- function(input, output) {
     output$pS <- renderText(x$details$within_ps_told)
     output$or <-  renderText(x$details$beyond_or)
     
-      z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by)) +
-              ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) + ggplot2::xlab("$\\beta_A$") +
-              ggplot2::ylab("$\\beta_Y$") + ggplot2::labs(colour= "beta_0")
+      z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by, label=bay)) +
+              ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) + 
+              ggplot2::xlab("$\\beta_A$") + ggplot2::ylab("$\\beta_Y$") + 
+              ggplot2::labs(colour= "beta_0")
       
-    ggplotly(z)
+      z <- z+geom_hline(yintercept=0,  size=0.2)
+      z <- z+geom_vline(xintercept = 0,  size=0.2)
+      
+    ggplotly(z)#, tooltip = c("x$param$ba", "x$param$by", "x$param$b0", "x$param$bay"))        ,label=bay
     
   })
   
