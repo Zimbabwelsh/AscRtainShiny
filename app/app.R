@@ -135,7 +135,7 @@ dashboardBody(
                      sliderInput(inputId = "num8", label = "\\(\\beta_Y\\) Range", 
                                  value=c(-0.2,0.2), min=-0.5, max=0.5),
                      sliderInput(inputId = "num9", label = "\\(\\beta_{AY}\\) Range",
-                                 value=c(0,0), min=0, max=1)
+                                 value=c(-0,0), min=-0.5, max=0.5, step=0.01)
               ),
               mainPanel(
                         (column(12,
