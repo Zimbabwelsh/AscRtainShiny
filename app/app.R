@@ -160,7 +160,7 @@ dashboardBody(
                    box(width=12,
                    h4("Key References"),
                    br(),
-                   p("Griffith, Gareth, Tim M. Morris, Matt Tudball, Annie Herbert, Giulia Mancano, Lindsey Pike, Gemma C. Sharp, Tom M. Palmer, George Davey Smith, Kate Tilling, Luisa Zuccolo, Neil M. Davies, and Gibran Hemani. 2020.", 
+                   p("Griffith, Gareth, Tim T. Morris, Matt Tudball, Annie Herbert, Giulia Mancano, Lindsey Pike, Gemma C. Sharp, Tom M. Palmer, George Davey Smith, Kate Tilling, Luisa Zuccolo, Neil M. Davies, and Gibran Hemani. 2020.", 
                      a(href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v1.full.pdf", "Collider Bias undermines our understanding of COVID-19 disease risk and severity."), "MedRxiv Preprint"),
                    br(),
                    p("Munafo, Marcus R., Kate Tilling, Amy E. Taylor, David M. Evans, and George Davey Smith. 2018.", a(href="https://doi.org/10.1093/ije/dyx206", "Collider Scope: When Selection Bias Can Substantially Influence Observed Associations."), "International Journal of Epidemiology 47 (1): 226-35."),
