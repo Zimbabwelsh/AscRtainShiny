@@ -22,7 +22,8 @@ dashboardSidebar(
   sidebarMenu(
     menuItem("Theory", tabName="first", icon = icon("book-reader")),
     menuItem("Estimation", tabName="second", icon=icon("calculator")),
-    menuItem("Further Resources", tabName="third", icon=icon("book"))
+    menuItem("Under The Hood", tabName= "third", icon=icon("calculator")),
+    menuItem("Further Resources", tabName="fourth", icon=icon("book"))
   )
 ),
 
@@ -37,34 +38,40 @@ dashboardBody(
                    box(width=12,
                        h4(em("Collider Bias and COVID-19"), align="center"),
                        tags$img(src = "COVID Colliders Vert.png", style="display: block; margin-left: auto; margin-right: auto;"),br(),br(),
-                       em("Arrows indicate effects of exposure \\((A)\\) and outcome \\((Y)\\) on selection into sample. Dashed lines indicate an induced correlation by conditioning on the sample."
+                       em("Arrows indicate effects of exposure \\((A)\\) and outcome \\((Y)\\) on selection into sample. Dashed lines indicate
+                          an induced correlation by conditioning on the sample."
                    )),
                    box(width=12,h4("Development"), 
                        "This app highlights some of the functionality of the",
-                       a(href="github.com/explodecomputer/AscRtain", "R Package"), tags$code("AscRtain"), "developed by", a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
+                       a(href="github.com/explodecomputer/AscRtain", "R Package"), tags$code("AscRtain"), "developed by",
+                       a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
                        "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer."),
                        br(), br(),
-                       "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by", a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
-                        to the MedRxiv preprint", a(href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v1.full.pdf", "'Collider bias undermines our understanding of COVID-19 disease risk
+                       "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by",
+                        a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
+                        to the MedRxiv preprint", a(href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v1.full.pdf",
+                        "'Collider bias undermines our understanding of COVID-19 disease risk
                         and severity.'"), "written with colleagues at the MRC-IEU, 2020.")
                    ),
             column(6,br(),
-                   box(width=12,"Consider the scenario in which we want to test if a given exposure \\((A)\\) influences an outcome \\((Y)\\). Consider also
-                that these two variables both independently cause a third variable \\((S)\\). Conditioning on \\(S\\)
+                   box(width=12,"Consider the scenario in which we want to test if a given exposure \\((A)\\) influences an outcome \\((Y)\\).
+                Consider also that these two variables both independently cause a third variable \\((S)\\). Conditioning on \\(S\\)
                 will induce a relationship betweeen \\(A\\) and \\(Y\\). This is known as", strong("Ascertainment Bias"), "or", strong("Collider Bias."),  
                 "Whilst it is largely acknowledged that sampling bias may affect representativeness of study findings, it is less
                 well understood that conditioning on a collider may substantially bias the estimated association between an exposure and outcome.",
                 br(), br(), 
                 em("Why is this particularly problematic in the analysis of COVID-19 data?"),
                 br(),
-                "Because COVID-19 study participants are likely to be strongly non-random and if we consider \\(S\\) to be", strong("selection into a COVID-sample"), "then we condition on it
-                by solely considering study participants. More worryingly, it is likely that exposure and outcome both predict entry into the COVID-19 samples, meaning we are conditioning on a collider and will produce biased estimates.",
+                "Because COVID-19 study participants are likely to be strongly non-random and if we consider \\(S\\) to be", strong("selection into
+                a COVID-sample"), "then we condition on it by solely considering study participants. More worryingly, it is likely that exposure and
+                outcome both predict entry into the COVID-19 samples, meaning we are conditioning on a collider and will produce biased estimates.",
                 br(), br(),
                 "Take two major sources of COVID-19 data:", strong("COVID-19 cases"), "and", strong("voluntary self-report:"),
                 br(),br(),
                 "We know", em("COVID testing"), "is non-random in the population. Factors associated with this non-randomness
-                such as having pre-existing conditions, or being a key worker may plausibly predict both whether you receive a test", em("and"), "your risk of COVID-19.",
-                "Similarly for", em("self-reporting"), "individual health-anxiety may plausibly predict both whether you opt into data collection", em("and"), "your risk of COVID-19.",
+                such as having pre-existing conditions, or being a key worker may plausibly predict both whether you receive a test", em("and"),
+                "your risk of COVID-19. Similarly for", em("self-reporting"), "individual health-anxiety may plausibly predict both whether you
+                opt into data collection", em("and"), "your risk of COVID-19.",
                 br(),br(),
                 "If we estimate population associations based on these ascertained values our results and causal conclusions may also be biased.",
                 br(),  br(),
@@ -90,23 +97,23 @@ dashboardBody(
                      br(),br(),
                      em("Population parameters"), "are defined as follows:", 
                      br(),br(),
-                     "\\(P(S=1)\\) gives the proportion of the population that is in the sample.", 
+                     "\\(P(S=1)\\) denotes the proportion of the population that is in the sample.", 
                      br(),
-                     "\\(P(A=1)\\) gives the proportion of the population for whom the exposure A is true",
+                     "\\(P(A=1)\\) denotes the proportion of the population for whom the exposure A is true.",
                      br(),
-                     "\\(P(Y=1)\\) gives the proportion of the population for whom the outcome Y is true.", 
+                     "\\(P(Y=1)\\) denotes the proportion of the population for whom the outcome Y is true.", 
                      br(),
-                     "\\(P(A \\cap Y)\\) gives the proportion of the population for whom A and Y are both true.",
+                     "\\(P(A \\cap Y)\\) denotes the proportion of the population for whom A and Y are both true.",
                      br(),br(),
                      em("Selection effects"), "are defined as follows:",
                     br(),br(),
-                    "\\(\\beta_0\\) is the baseline probability of being selected into the sample.",
+                    "\\(\\beta_0\\) denotes the baseline probability of being selected into the sample.",
                     br(),
-                    "\\(\\beta_A\\) is the effect on selection into the sample given A=1 is true.", 
+                    "\\(\\beta_A\\) is the differential effect on probability of being selected into the sample given A=1 is true.", 
                     br(),
-                    "\\(\\beta_0\\) is the effect on selection into the sample given Y=1 is true.", 
+                    "\\(\\beta_0\\) is the differential effect on probability of being selected into the sample given Y=1 is true.", 
                     br(),
-                    "\\(\\beta_{AY}\\) is the effect on selection into the sample given A=1 and Y=1 are both true."
+                    "\\(\\beta_{AY}\\) is the differential effect on probability of being selected into the sample given", em("both"), "A=1 and Y=1 are true."
                      
               ),
               column(3, h5("Observed Relationship"),
@@ -153,33 +160,67 @@ dashboardBody(
               )
             )
     ),
-     
+    
     tabItem(tabName = "third",
+            withMathJax(),
+            h2("Under The Hood"),br(),
+            box(width=12,
+                h4("Under the Hood"), 
+                br(), 
+                p("Following", a(href= "https://osf.io/vrcuf/", "Groenweld et al. (2019)"), "we can calculate the biased OR
+                for a binary exposure (A) on a binary outcome (Y) when both influence the probability of being present in the sample (S)", br(), 
+                  "We assume that being present in the sample is conditional on these two binary traits, such that:", br(), br(),
+                  "\\(P(S=1|A,Y) = \\beta_0 + \\beta_AA + \\beta_YY + \\beta_{AY}AY\\)",br(), br(), 
+                  
+                  "In this case, we can derive the expected odds ratio, expressed as:", br(), br(), 
+                  "\\(E[\\widehat{OR}_{S=1}] = \\frac{\\beta_0(\\beta_0 + \\beta_A + \\beta_Y + \\beta_{AY})}
+                  \\splitfrac{(\\beta_0 + \\beta_A)(\\beta_0 + \\beta_Y)}\\)",br(),
+                  
+                  "The simulation assumes that we know the fraction of the target population that is present in our sample \\((pS)\\).
+                  For the purposes of the",tags$code("parameter_space()"), "function, we are solely interested in the \\(beta\\) parameter values
+                  that give rise to a value of pS that is within the bounds of expectation:
+                  pS=??0+??ApA+??YpY+??AYpAY Scenario: we find an association between A and Y in our ascertained sample. Our question is what effects must A and Y have on sample ascertainment in order to induce the observed odds ratio OR, assuming that the true odds ratio is 1.
+                  Initialise a new VBB (V-structure, Binary exposure, Binary outcome) class"))),
+    
+    tabItem(tabName = "fourth",
             h2("Useful Resources"),br(),
             column(5,
                    box(width=12,
                    h4("Key References"),
                    br(),
-                   p("Griffith, Gareth, Tim T. Morris, Matt Tudball, Annie Herbert, Giulia Mancano, Lindsey Pike, Gemma C. Sharp, Tom M. Palmer, George Davey Smith, Kate Tilling, Luisa Zuccolo, Neil M. Davies, and Gibran Hemani. 2020.", 
-                     a(href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v1.full.pdf", "Collider Bias undermines our understanding of COVID-19 disease risk and severity."), "MedRxiv Preprint"),
+                   p("Griffith, Gareth J., Tim T. Morris, Matt Tudball, Annie Herbert, Giulia Mancano, Lindsey Pike, Gemma C. Sharp,
+                     Tom M. Palmer, George Davey Smith, Kate Tilling, Luisa Zuccolo, Neil M. Davies, and Gibran Hemani. 2020.", 
+                     a(href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v1.full.pdf", "Collider Bias undermines our
+                       understanding of COVID-19 disease risk and severity."), "MedRxiv Preprint"),
                    br(),
-                   p("Munafo, Marcus R., Kate Tilling, Amy E. Taylor, David M. Evans, and George Davey Smith. 2018.", a(href="https://doi.org/10.1093/ije/dyx206", "Collider Scope: When Selection Bias Can Substantially Influence Observed Associations."), "International Journal of Epidemiology 47 (1): 226-35."),
+                   p("Munafo, Marcus R., Kate Tilling, Amy E. Taylor, David M. Evans, and George Davey Smith. 2018.", 
+                     a(href="https://doi.org/10.1093/ije/dyx206", "Collider Scope: When Selection Bias Can Substantially Influence Observed Associations."),
+                     "International Journal of Epidemiology 47 (1): 226-35."),
                    br(),
-                   p("Miguel Angel Luque-Fernandez, Michael Schomaker, Daniel Redondo-Sanchez, Maria Jose Sanchez Perez, Anand Vaidya, Mireille E Schnitzer. 2019.", a(href="https://academic.oup.com/ije/article/48/2/640/5248195", "Educational Note: Paradoxical collider effect in the analysis of non-communicable disease epidemiological data: a reproducible illustration and web application"),
+                   p("Miguel Angel Luque-Fernandez, Michael Schomaker, Daniel Redondo-Sanchez, Maria Jose Sanchez Perez, Anand Vaidya,
+                     Mireille E Schnitzer. 2019.", a(href="https://academic.oup.com/ije/article/48/2/640/5248195", "Educational Note:
+                                                     Paradoxical collider effect in the analysis of non-communicable disease epidemiological data:
+                                                     a reproducible illustration and web application."),
                    "International Journal of Epidemiology, 48(2): 640-653."),
                    br(),
-                   p("Smith LH, and VanderWeele TJ. 2019.", a(href="https://doi:10.1097/EDE.0000000000001032", "Bounding bias due to selection."), "Epidemiology. 30(4): 509-516."), 
+                   p("Smith LH, and VanderWeele TJ. 2019.", a(href="https://doi:10.1097/EDE.0000000000001032", "Bounding bias due to selection."),
+                     "Epidemiology. 30(4): 509-516."), 
                    br(), 
-                   p("Elwert, Felix, and Christopher Winship. 2014.", a(href="https://doi.org/10.1146/annurev-soc-071913-043455","Endogenous Selection Bias: The Problem of Conditioning on a Collider Variable."), "Annual Review of Sociology 40 (July): 31-53."),
+                   p("Elwert, Felix, and Christopher Winship. 2014.", a(href="https://doi.org/10.1146/annurev-soc-071913-043455",
+                                                                        "Endogenous Selection Bias: The Problem of Conditioning on a Collider Variable."),
+                     "Annual Review of Sociology 40 (July): 31-53."),
                    br(),
-                   p("Cole, Stephen R., Robert W. Platt, Enrique F. Schisterman, Haitao Chu, Daniel Westreich, David Richardson, and Charles Poole. 2010.", a(href="https://doi.org/10.1093/ije/dyp334","Illustrating Bias due to Conditioning on a Collider."), "International Journal of Epidemiology 39 (2): 417-20."),
+                   p("Cole, Stephen R., Robert W. Platt, Enrique F. Schisterman, Haitao Chu, Daniel Westreich, David Richardson, and Charles Poole. 2010.",
+                     a(href="https://doi.org/10.1093/ije/dyp334","Illustrating Bias due to Conditioning on a Collider."), "International Journal of Epidemiology 39 (2): 417-20."),
                    br(),
-                   p("Groenwold, Rolf H. H., Tom M. Palmer, Kate Tilling. 2020.", a(href="https://osf.io/vrcuf", "Conditioning on a mediator to adjust for unmeasured confounding"),  "OSF Preprint")
+                   p("Groenwold, Rolf H. H., Tom M. Palmer, Kate Tilling. 2020.", a(href="https://osf.io/vrcuf", "Conditioning on a mediator to adjust
+                                                                                    for unmeasured confounding"),  "OSF Preprint")
             )),
             column(5,
                    box(width=12,
                    h4("Pedagogical Resources"),
-                   "The following apps give an informative introduction to collider bias in observational data, and allow the user to explore possible relationships.",
+                   "The following apps give an informative introduction to collider bias in observational data, and allow the
+                   user to explore possible relationships.",
                    br(), br(),
                    "Sensitivity Analysis for Selection Bias",a(href="https://selection-bias.herokuapp.com", "website."), "Smith LH, and Vanderweele TJ. 2019.",
                    br(),
@@ -187,7 +228,7 @@ dashboardBody(
                    br(),
                    "Bias", a(href="https://remlapmot.shinyapps.io/bias-app/", "app."), "Groenwold, Palmer, and Tilling. 2019.",
                    br(),br(),
-                   "These R Packages allow a user to define a DAG and simulate data from it, which can inform the size of bias for a specified model.",
+                   "These R Packages allow a user to specify a DAG and simulate data from it, which can inform the size of bias for a specified model.",
                    br(),
                    tags$code("lavaan"), a(href="http://lavaan.ugent.be", "R Package"),"Rosseel. 2012.",
                    br(),
