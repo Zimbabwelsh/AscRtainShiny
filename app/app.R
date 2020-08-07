@@ -169,34 +169,12 @@ dashboardBody(
                    box(width=12,
                        h4("Under the Hood"), 
                        br(), 
-                       p("Following", a(href= "https://osf.io/vrcuf/", "Groenwold et al. (2019)"), "we can calculate the biased OR
-                       for a binary exposure (A) on a binary outcome (Y) when both influence the probability of being present in the sample (S)", br(), 
-                         "We assume that being present in the sample is conditional on these two binary traits, such that:", br(), br(),
-                         "\\(P(S=1|A,Y) = \\beta_0 + \\beta_AA + \\beta_YY + \\beta_{AY}AY\\)",br(), br(), 
-                         
-                         "In this case, we can derive the expected odds ratio, expressed as:", br(), br(),
-                         "\\(E[\\widehat{OR}_{S=1}] = \\dfrac{\\beta_0(\\beta_0 + \\beta_A + \\beta_Y + \\beta_{AY})}{(\\beta_0 + \\beta_A)(\\beta_0 + \\beta_Y)}\\)",br(),br(),
-                         
-                         "The simulation assumes that we know the fraction of the target population that is present in our sample \\((pS)\\). 
-                         The", tags$code("parameter_space()"), "function explores possible selection effects which may give rise to the 
-                         specified odds ratio under a known true odds ratio of 1. Thus, for the purposes of the", tags$code("parameter_space()"),
-                         "function, we are solely interested in the \\(\\beta\\) parameter values
-                         that give rise to a value of \\(pS\\) that is within the bounds of expectation:", br(), br(), 
-                         "\\(pS=\\beta_0 + \\beta_{ApA} + \\beta_{YpY} + \\beta_{AYpAY}\\)", br(), br(),
+                       includeMarkdown(src="under_the_hood.rmd")
                          
                   )
                 )
             ),
-            column(6,
-                   box(width=12,
-                       h4("A Simplified Example"), br(),
-                       p("Let's take a simplified example from the published literature around COVID-19. For a more detailed discussion of this 
-                         example, see our preprint, which discusses this example in further detail.")))
-            ),
-                  
-                  
-                  
-                 
+
     
     tabItem(tabName = "fourth",
             h2("Useful Resources"),br(),
