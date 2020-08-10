@@ -34,7 +34,7 @@ dashboardBody(
       tabName="first",
       withMathJax(),
             
-            column(6,
+            fluidRow(column(6,
                    h3("Theoretical Motivation for Considering Collider Bias", align="center"),br(),
                    box(width=12,
                        h4(em("Collider Bias and COVID-19"), align="center"),
@@ -81,7 +81,7 @@ dashboardBody(
                 effects which would give rise to observed outcomes under a true null. Depending on the range of values returned
                 this allows us to make more informed inference about bias in our estimated associations.")
                 )
-            
+            )
     ),
 
     tabItem(tabName="second",
@@ -165,20 +165,19 @@ dashboardBody(
     tabItem(tabName = "third",
             withMathJax(),
             h2("How does it work?"),br(),
-            column(6,
-                   box(width=12,
-                       h4("Under the Hood"), 
+            fluidRow(column(12,
+                                          h4("Under the Hood"), 
                        br(), 
-                       includeMarkdown(src="under_the_hood.rmd")
+                       includeMarkdown("under_the_hood.md")
                          
-                  )
+            )
                 )
             ),
 
     
     tabItem(tabName = "fourth",
             h2("Useful Resources"),br(),
-            column(5,
+            fluidRow(column(5,
                    box(width=12,
                    h4("Key References"),
                    br(),
@@ -231,7 +230,7 @@ dashboardBody(
                    tags$code("simMixedDAG"), a(href="https://github.com/IyarLin/simMixedDAG", "R Package"))
                    )
                    ))
-            )
+            ))
     )
 
 
