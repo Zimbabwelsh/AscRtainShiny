@@ -171,7 +171,7 @@ sum(S) / length(S)
 #> [1] 0.012493
 ```
 
-From our simulated population, what is the observed assocation between A and Y in the sampled subset?
+From our simulated population, what is the observed association between *A* and *Y* in the sampled subset?
 ```{r}
 summary(glm(Y~A, family="binomial", subset=S==1))$coef[2,1] %>% exp
 #> [1] 0.1264771
@@ -183,4 +183,4 @@ a$or
 #> [1] 0.157
 ```
 
-We can see that the OR is beyond the target OR that we specified in our research question. Thus we see an OR at least as extreme as our target OR within our sample, solely as a result of selection effects. In this case, if the baseline probability of being in the sample is 0.0004, and smoking increases this by 0.0022, whilst COVID-19 increases this by 0.115, we can find an OR of 0.157 for smoking on COVID-19 caseness, when the true relationship in the population is null.
+We can see that the OR is beyond the target OR that we specified in our research question. Thus we see an OR at least as extreme as our target OR within our sample, solely as a result of selection effects. In this case, if the baseline probability of being in the sample is 0.0004, and smoking increases this by 0.0022, whilst COVID-19 increases this by 0.115, we can find an OR of 0.157 for smoking on COVID-19 caseness, when the true relationship in the population is null. The same process will be true for all combinations of $\beta_0, \beta_A$ and $\beta_Y$ displayed in the scatter plot. 
