@@ -5,11 +5,11 @@ output: html_notebook
 
 Following [Groenwold et al.](https://osf.io/vrcuf/) (2019) we can calculate the biased OR for a binary exposure $(A)$ on a binary outcome $(Y)$ when both influence the probability of being present in the sample $(S)$.
 
-Let us assume that being present in the sample is conditional on these two binary traits. Then we may express an individual's chance of being present in the sample as constituted of four probabilities:
+Let us assume that being present in the sample is conditional on these two binary traits. We may then express an individual's chance of being present in the sample as a combination of four probabilities:
 
 $$\mathbb{P}(S=1|A,Y)=β_0+β_AA+β_YY+β_{AY}AY$$
 
-Where:
+*Where:*
 
 $\beta_0$ is the baseline probability of any individual to be a part of our sample. In order for any generalisation to be made, this needs to be non-zero, otherwise sampling is solely a function of the exposure and outcome. 
 
@@ -132,8 +132,7 @@ We can see that there are many values of $\beta_A$ and $\beta_Y$ which meet the 
 ```{r}
 x$scatter()
 ```
-![China Smoking Example](/00RESEARCH/repo/AscRtain.shiny/app/www/SmokingCollider.png)  
-
+![Smoking selection effects](/00RESEARCH/repo/AscRtain.shiny/app/www/SmokingCollider.png)   
 
 We can see from the scatter plot above, that with relatively subtle changes in selection effects, we can induce ORs of a large magnitude. This example has excluded the possibility of the interactive effect on sample membership of both COVID-19 and smoking status, but this further complicates matters. There is a more comprehensive discussion of this in the medrxiv [preprint](https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v3) that accompanies this app. 
 
