@@ -136,10 +136,52 @@ x$scatter()
 
 We can see from the scatter plot above, that with relatively subtle changes in selection effects, we can induce ORs of a large magnitude. This example has excluded the possibility of the interactive effect on sample membership of both COVID-19 and smoking status, but this further complicates matters. There is a more comprehensive discussion of this in the medrxiv [preprint](https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v3) that accompanies this app. 
 
+Let's go further - and investigate possible selection effects which could give rise to an OR indicating a 5-fold risk instead of a 5-fold protective effect of smoking on COVID-19 caseness. This can give us an indication of how sensitive our findings are to selection effects, which can help us interrogate the likelihood of our observed results generalising in external situations. 
+
+We can simply initialise another *VBB* with equivalent population prevalence estimates for *A*, *Y* and *AY*, but specify an observed *OR* of 5. 
+
+```{r}
+x1 <- VBB$new()
+x1$parameter_space(
+  target_or=5, 
+     pS=0.01, 
+     pA=0.277,
+     pY=0.1,
+     pAY=0.0277,
+     b0_range=c(0,0.2), 
+     ba_range=c(-0.1,0.2), 
+     by_range=c(-0.1,0.2), 
+     bay_range=c(0,0), 
+     granularity=500
+ )
+ 
+SmokingColliderCombined <- x$param %>% 
+        ggplot2::ggplot(., aes(x=ba, y=by))+
+        ggplot2::geom_point(aes(colour=b0))+
+        ggplot2::labs(colour = expression (paste("Baseline inc. prob. ", (beta[0]), " OR < 0.17"))) +
+        ggplot2::scale_colour_gradient(low="darkgoldenrod2", high="white")+
+        ggnewscale::new_scale_colour() +
+        ggplot2::geom_point(data=x1$param, aes(colour = b0))+
+        ggplot2::scale_colour_gradient(low= "blue", high="white")+
+        ggplot2::labs(x = expression(paste("Effect of Smoking on inclusion probability (", beta[A],")")),
+                      y=expression(paste("Effect of COVID-19 on inclusion probability (", beta[Y], ")")),
+                      colour = expression(paste("Baseline inc. prob. ", (beta[0])," OR > 5")))+
+        ggplot2::ggtitle("Smoking and COVID-19 Additive Selection Effects")+
+        ggplot2::geom_hline(yintercept=0,size=0.2, linetype="dotted")+
+        ggplot2::geom_vline(xintercept=0, size=0.2, linetype="dotted")
+
+SmokingColliderCombined
+  
+```
+
+![Smoking and COVID-19 Selection Additive Selection Effects](/00RESEARCH/repo/AscRtain.shiny/app/www/SmokingColliderCombined.png)
+
+
+We can see from the combined figure that there are a large range of possible selection values which could give rise to an observed relationship of a five-fold protective or risk-increasing relationship, under a true null effect. Remember, this is without including the possibility of interactive effects on participation for both exposure and outcome. It is also clear that these are highly sensitive to the specification of $\beta_0$, as the lower the baseline likelihood of sampling, the more likely it is that we are inducing relationships solely as a product of selection, as selected groups make up a larger proportion of the sample. We bounded this for the example above between 0 and 0.2, but it is clear that we only get such extreme ORs when $\beta_0$ is low. Unfortunately, $\beta_0$ is also one of the most difficult parameters to posit hypothetical values for as it is sensitive to study-specific sampling procedure and specification of target population. Moreover, these are often described in inadequate detail to parameterise this in secondary sensitivity analyses, which are most effective when carried out by primary researchers, to minimise researcher degrees of freedom. 
 
 ###  Simulate from parameter values to recapitulate target OR.
 
-We want to simulate individual level data in which there is no relationship between **A** and **Y**. Note that actual population size is not relevant here, it is the proportion of the population sampled that matters. 
+For proof of concept, we need to simulate individual level data in which there is no relationship between **A** and **Y** and demonstrate that we can recover the observed, biased OR solely as a function of differential selection pressures. Note that actual population size is not relevant here, it is the proportion of the population sampled that matters. 
 
 Parameters:
 
