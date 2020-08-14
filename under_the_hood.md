@@ -43,7 +43,7 @@ Let's take an example from the literature that emerged around smoking and COVID 
 
 We have written explainers on why inferring from relationships from hospitalised patients may be subject to collider bias [[1](https://www.hdruk.ac.uk/news/we-should-be-cautious-about-associations-of-patient-characteristics-with-covid-19-outcomes-that-are-identified-in-hospitalised-patients/),[2](https://rss.onlinelibrary.wiley.com/doi/10.1111/1740-9713.01413)]. For the purposes of explanation here, let's assume that there is no interaction between the selection processes for smoking and COVID-19 into a hospitalised sample. That is, the selection forces acting on an individual who both smokes and has COVID-19 are equal to the sum of their constituent $\beta$ estimates.
 
-To estimate plausible selection processes, we must input figures for $p_S$ (the proportion of the population sampled), $p_A$ (the population prevalence of smoking), and $p_Y$ (the population prevalence of COVID-19). We are exploring the chance of generating an OR of 0.17 under a null true relationship, thus there is no relationship between smoking and COVID-19, and so $p_{AY}$ is simply $p_Ap_Y$. We take $p_A$ from a population prevalence estimate of smoking in China (27.7%) [[3](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6546632/)]. We also assume COVID prevalence in the population at this point was 10%. Finally, we must provide a value for $p_S$. This is the strongest assumption, as we are unsure what fraction of the target population the 5023 individuals in the meta-analysis constitute, although for the purposes of this demonstration we will assume this represents 0.001 of the target population.
+To estimate plausible selection processes, we must input figures for $p_S$ (the proportion of the population sampled), $p_A$ (the population prevalence of smoking), and $p_Y$ (the population prevalence of COVID-19). We are exploring the chance of generating an OR of 0.17 under a null true relationship, thus there is no relationship between smoking and COVID-19, and so $p_{AY}$ is simply $p_Ap_Y$. We take $p_A$ from a population prevalence estimate of smoking in China (27.7%) [[3](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6546632/)]. We also assume COVID prevalence in the population at this point was 10%. Finally, we must provide a value for $p_S$. This is perhaps the strongest assumption, as we are unsure what fraction of the target population the 5023 individuals in the meta-analysis constitute, although for the purposes of this demonstration we will assume this represents 0.01 of the target population.
 
 ### AscRtain Input
 
@@ -177,7 +177,60 @@ SmokingColliderCombined
 ![Smoking and COVID-19 Selection Additive Selection Effects](/00RESEARCH/repo/AscRtain.shiny/app/www/SmokingColliderCombined.png)
 
 
-We can see from the combined figure that there are a large range of possible selection values which could give rise to an observed relationship of a five-fold protective or risk-increasing relationship, under a true null effect. Remember, this is without including the possibility of interactive effects on participation for both exposure and outcome. It is also clear that these are highly sensitive to the specification of $\beta_0$, as the lower the baseline likelihood of sampling, the more likely it is that we are inducing relationships solely as a product of selection, as selected groups make up a larger proportion of the sample. We bounded this for the example above between 0 and 0.2, but it is clear that we only get such extreme ORs when $\beta_0$ is low. Unfortunately, $\beta_0$ is also one of the most difficult parameters to posit hypothetical values for as it is sensitive to study-specific sampling procedure and specification of target population. Moreover, these are often described in inadequate detail to parameterise this in secondary sensitivity analyses, which are most effective when carried out by primary researchers, to minimise researcher degrees of freedom. 
+We can see from the combined figure that there are a large range of possible selection values which could give rise to an observed relationship of a five-fold protective or risk-increasing relationship, under a true null effect. Remember, this is without including the possibility of interactive effects on participation for both exposure and outcome. It is also clear that these are highly sensitive to the specification of $\beta_0$, as the lower the baseline likelihood of sampling, the more likely it is that we are inducing relationships solely as a product of selection, as selected groups make up a larger proportion of the sample. We bounded this for the example above between 0 and 0.2, but it is clear that we only get such extreme ORs when $\beta_0$ is low. Unfortunately, $\beta_0$ is also one of the most difficult parameters to posit hypothetical values for as it is sensitive to study-specific sampling procedure and specification of target population. Moreover, these are often described in inadequate detail to parameterise this in secondary sensitivity analyses, which are most effective when carried out by primary researchers, to minimise researcher degrees of freedom.
+
+We can explore the sensitivity of ORs to selection processes using the same process. If we hypothesise a two-fold elevated risk or protective effect of smoking and produce the same graphic, we can see how different selection processes must be between extreme and less extreme observed relationships. Below is the same graphic but with OR of 2 and 0.5 shaded. 
+
+```{r}
+
+x2 <- VBB$new()
+x2$parameter_space(
+  target_or=2, 
+     pS=0.01, 
+     pA=0.277,
+     pY=0.1,
+     pAY=0.0277,
+     b0_range=c(0,0.2), 
+     ba_range=c(-0.1,0.2), 
+     by_range=c(-0.1,0.2), 
+     bay_range=c(0,0), 
+     granularity=500
+ )
+
+
+x3 <- VBB$new()
+x3$parameter_space(
+  target_or=0.5, 
+     pS=0.01, 
+     pA=0.277,
+     pY=0.1,
+     pAY=0.0277,
+     b0_range=c(0,0.2), 
+     ba_range=c(-0.1,0.2), 
+     by_range=c(-0.1,0.2), 
+     bay_range=c(0,0), 
+     granularity=500
+ )
+ 
+x3$param %>% 
+    ggplot2::ggplot(., aes(x=ba, y=by))+
+    ggplot2::geom_point(aes(colour=b0))+
+    ggplot2::labs(colour = expression (paste("Baseline inc. prob. ", (beta[0]), " OR < 0.5"))) +
+    ggplot2::scale_colour_gradient(low="darkgoldenrod2", high="white")+
+    ggnewscale::new_scale_colour() +
+    ggplot2::geom_point(data=x2$param, aes(colour = b0))+
+    ggplot2::scale_colour_gradient(low= "blue", high="white")+
+    ggplot2::labs(x = expression(paste("Effect of Smoking on inclusion probability (", beta[A],")")),
+                  y=expression(paste("Effect of COVID-19 on inclusion probability (", beta[Y], ")")),
+                  colour = expression(paste("Baseline inc. prob. ", (beta[0])," OR > 2")))+
+    ggplot2::ggtitle("Smoking and COVID-19 Additive Selection Effects")+
+    ggplot2::geom_hline(yintercept=0,size=0.2, linetype="dotted")+
+    ggplot2::geom_vline(xintercept=0, size=0.2, linetype="dotted")
+
+```
+![Smoking and COVID-19 Selection Twofold Additive Selection Effects](/00RESEARCH/repo/AscRtain.shiny/app/www/TwofoldSmokingColliderCombined.png)
+
+We can see from the Figure above, that the less extreme the OR, the more subtle the selection processes can be - as selection effects producing an observed OR under a true null clearly extend further towards the centre for the twofold risk ratios, relative to the fivefold changes. For a given observed relationship we are essentially positing (in the additive space) that our selection processes fall into the central region of the graph, which diminishes as odds ratios become less extreme.
 
 ###  Simulate from parameter values to recapitulate target OR.
 
