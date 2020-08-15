@@ -9,7 +9,7 @@ Following Groenwold et al. (2019) we can calculate the biased OR for a binary ex
 
 Let us assume that being present in the sample is conditional on these two binary traits. Then we may express an individual's chance of being present in the sample as constituted of four probabilities:
 
-$$\mathbb{P}(S=1|A,Y)=β_0+β_AA+β_YY+β_{AY}AY$$
+$$\mathbb{P}(S=1|A,Y)=\beta_0+\beta_AA+\beta_YY+\beta_{AY}AY$$
 
 Where:
 
@@ -21,21 +21,21 @@ $\beta_Y$ is the differential probability of being sampled for cases $(Y=1)$.
 
 $\beta_{AY}$ is the differential probability of being sampled for cases in the exposed group $(A=1,Y=1)$.
 
-Given this, we may derive the expected odds ratio, which gives:
+Given this, we may derive the expected odds ratio for the association of A on Y purely due to collider bias (i.e. under the null hypothesis of no association), which gives:
 
-$$E[\widehat{OR}_{S=1}]=\dfrac{β_0(β_0+β_A+β_Y+β_{AY})}{(β_0+β_A)(β_0+β_Y)}$$
+$$E[\widehat{OR}_{S=1}]=\dfrac{\beta_0(\beta_0+\beta_A+\beta_Y+\beta_{AY})}{(\beta_0+\beta_A)(\beta_0+\beta_Y)}$$
 
-For the purposes of the parameter_space() function, we want to know for given fraction of population sampled $(pS)$, and known prevalence of outcome and sampling, what parameter space of possible selection effects would give rise to a given odds ratio $(OR)$ under a true null effect $(OR=1)$.
+A way to use this in a sensitivity analysis is to determine for a given fraction of population sampled $(pS)$, and known prevalence of outcome and sampling, what set of possible selection effects ($\beta*$) would give rise to a given odds ratio ($OR_{S=1}$) under a true null effect $(OR=1)$. 
 
-Thus, for the purposes of sensitivity analyses, we are solely interested in the $β$ parameter values that approximately give rise to our specified value of $pS$:
+For the purposes of sensitivity analyses, we are solely interested in the $\beta$ parameter values that approximately give rise to our specified value of $pS$:
 
-$$pS=β_0+β_Ap_A+β_Yp_Y+β_{AY}p_{AY}$$
+$$pS=\beta_0+\beta_Ap_A+\beta_Yp_Y+\beta_{AY}p_{AY}$$
   
-
 Substituting in known values of $p_A$, $p_Y$ and $p_{AY}$ allows us to calculate $pS$ for a given $\beta_0$, $\beta_A$, $\beta_Y$ and $\beta_{AY}$. We then take all $\beta_*$ combinations which satisfy our $pS$ conditions, and calculate $E[\widehat{OR}_{S=1}]$ for all combinations. We can then present the combination of $\beta_*$ estimates which give rise to the bounds of $pS$ and the observed $OR$.
 
 For any given $\beta_*$ values, we can simulate independent exposure and outcome data under selection pressures, and we should recapitulate our observed $OR$. 
 
+The `AscRtain::parameter_space()` function performs this analysis, and this shiny app is a wrapper for that function.
 
 A simplified demonstration of this method is provided below. For a version of the example below taken directly from the literature see our [preprint](medrxiv.org/content/10.1101/2020.05.04.20090506v3 "Collider Bias undermines our understanding of COVID-19 disease and severity"). For simplicity we omit discussion of the $\beta_{AY}$ interaction term here.
 
