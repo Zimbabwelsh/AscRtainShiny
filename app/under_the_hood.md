@@ -136,7 +136,7 @@ x$scatter()+
   ggplot2::geom_hline(yintercept=0, linetype="dotted") + 
   ggplot2::ggtitle("Smoking and COVID-19 selection. beta_{AY} = 0")
 ```
-![](/00RESEARCH/repo/AscRtain.shiny/app/www/SmokingCollider.png)   
+![](www/SmokingCollider.png)   
 
 We can see from the scatter plot above, that with relatively subtle changes in selection effects, we can induce ORs of a large magnitude. This example has excluded the possibility of the interactive effect on sample membership of both COVID-19 and smoking status, but this further complicates matters. There is a more comprehensive discussion of this in the medrxiv [preprint](https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v3) that accompanies this app. 
 
@@ -178,7 +178,7 @@ SmokingColliderCombined
   
 ```
 
-![](/00RESEARCH/repo/AscRtain.shiny/app/www/SmokingColliderCombined.png)
+![](www/SmokingColliderCombined.png)
 
 
 We can see from the combined figure that there are a large range of possible selection values which could give rise to an observed relationship of a five-fold protective or risk-increasing relationship, under a true null effect. Remember, this is without including the possibility of interactive effects on participation for both exposure and outcome. It is also clear that these are highly sensitive to the specification of $\beta_0$, as the lower the baseline likelihood of sampling, the more likely it is that we are inducing relationships solely as a product of selection, as selected groups make up a larger proportion of the sample. We bounded this for the example above between 0 and 0.2, but it is clear that we only get such extreme ORs when $\beta_0$ is low. Unfortunately, $\beta_0$ is also one of the most difficult parameters to posit hypothetical values for as it is sensitive to study-specific sampling procedure and specification of target population. Moreover, these are often described in inadequate detail to parameterise this in secondary sensitivity analyses, which are most effective when carried out by primary researchers, to minimise researcher degrees of freedom.
@@ -232,7 +232,7 @@ x3$param %>%
     ggplot2::geom_vline(xintercept=0, size=0.2, linetype="dotted")
 
 ```
-![](/00RESEARCH/repo/AscRtain.shiny/app/www/TwofoldSmokingColliderCombined.png)
+![](www/TwofoldSmokingColliderCombined.png)
 
 We can see from the Figure above, that the less extreme the OR, the more subtle the selection processes can be - as selection effects producing an observed OR under a true null clearly extend further towards the centre for the twofold risk ratios, relative to the fivefold changes. For a given observed relationship we are essentially positing (in the additive space) that our selection processes fall into the central region of the graph, which diminishes as odds ratios become less extreme.
 
