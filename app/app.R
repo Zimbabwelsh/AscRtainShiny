@@ -261,8 +261,8 @@ server <- function(input, output) {
     
       z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by, label=bay)) +
               ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) + 
-              ggplot2::xlab("$\\beta_A$") + ggplot2::ylab("$\\beta_Y$") + 
-              ggplot2::labs(colour= "beta_0")
+              ggplot2::xlab("bA") + ggplot2::ylab("bY") + 
+              ggplot2::labs(colour= "b0")
       
       z <- z+geom_hline(yintercept=0,  size=0.2)
       z <- z+geom_vline(xintercept = 0,  size=0.2)
