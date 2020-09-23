@@ -110,11 +110,11 @@ dashboardBody(
                     br(),br(),
                     "\\(\\beta_0\\) denotes the baseline probability of being selected into the sample.",
                     br(),
-                    "\\(\\beta_A\\) is the differential effect on probability of being selected into the sample given A=1 is true.", 
+                    "\\(\\beta_A\\) is the difference in probability of being selected into the sample given A=1 is true.", 
                     br(),
-                    "\\(\\beta_0\\) is the differential effect on probability of being selected into the sample given Y=1 is true.", 
+                    "\\(\\beta_Y\\) is the difference in probability of being selected into the sample given Y=1 is true.", 
                     br(),
-                    "\\(\\beta_{AY}\\) is the differential effect on probability of being selected into the sample given", em("both"), "A=1 and Y=1 are true."
+                    "\\(\\beta_{AY}\\) is the difference in probability of being selected into the sample given", em("both"), "A=1 and Y=1 are true."
                      
               ),
               column(3, h5("Observed Relationship"),
@@ -261,7 +261,7 @@ server <- function(input, output) {
     
       z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by, label=bay)) +
               ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) + 
-              ggplot2::xlab("bA") + ggplot2::ylab("bY") + 
+              ggplot2::xlab("$\\beta_A$") + ggplot2::ylab("$\\beta_Y$") + 
               ggplot2::labs(colour= "b0")
       
       z <- z+geom_hline(yintercept=0,  size=0.2)
