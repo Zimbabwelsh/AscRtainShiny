@@ -147,9 +147,7 @@ dashboardBody(
               ),
               mainPanel(
                         (column(12,
-                                em("Note: this plot will only render if the observed OR implies difference (OR!=1)"),
-                                conditionalPanel("input.num1 != 1",
-                                                 withSpinner(plotlyOutput("scatter", width="750px", height="600px"))),
+                                withSpinner(plotlyOutput("scatter", width="750px", height="600px")),
                                 br(),
                                 "Estimated Parameter Combinations",
                                 verbatimTextOutput("params"),
@@ -241,6 +239,10 @@ server <- function(input, output) {
     gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, input$num8, input$num9)
     print(gran)
     
+    validate(
+      need(input$num5 < (input$num4+input$num3), "Please select a plausible P(A&Y). P(A&Y) cannot exceed P(A=1)+P(Y=1)"),
+      need(input$num1!=1, "Please select an Odds Ratio that implies difference")
+    )
     
     x <- VBB$new()
     x$parameter_space(
