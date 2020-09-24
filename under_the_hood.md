@@ -53,7 +53,7 @@ First we must initialise a new VBB (**V**-structure, **B**inary-exposure, **B**i
 ```{r}
 library(AscRtain)
 x <- VBB$new
-x
+x()
 #> <VBB>
 #>   Public:
 #>     clone: function (deep = FALSE) 
