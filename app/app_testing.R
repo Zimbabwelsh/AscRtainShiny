@@ -170,9 +170,7 @@ dashboardBody(
                      ),
               mainPanel(
                 (column(12,
-                        em("Note: this plot will only render if the observed OR implies difference (OR!=1)"),
-                        conditionalPanel("input.num1 != 1",
-                                         withSpinner(plotlyOutput("scatter", width="750px", height="600px"))),
+                        withSpinner(plotlyOutput("scatter", width="750px", height="600px")),
                         br(),
                         "Estimated Parameter Combinations",
                         verbatimTextOutput("params"),
@@ -180,12 +178,10 @@ dashboardBody(
                         verbatimTextOutput("pS"),
                         "Parameter Combinations plausibly producing observed OR",
                         verbatimTextOutput("or")
-                        )
-                 )
-                )
+                ))
               )
-            
-            ),
+            )
+    ),
     
     tabItem(tabName = "third",
             withMathJax(),
@@ -260,8 +256,17 @@ dashboardBody(
 server <- function(input, output) {
   withMathJax()
   output$scatter <- renderPlotly({
+    
+    validate(
+      need(input$num5 < (input$num4+input$num3), "Please select a plausible P(A&Y). P(A&Y) cannot exceed P(A=1)+P(Y=1)"),
+      need(input$num1!=1, "Please select an Odds Ratio that implies difference")
+    )
+    
     if(input$selection_class == "Exposure"){
+      
       gran <- get_granularity((input$num10)*1000000, input$num6, c(input$num7, input$num7), input$num8, input$num9)
+      print(gran)
+      
       x <- VBB$new()
       x$parameter_space(
         target_or=input$num1, 
@@ -281,13 +286,19 @@ server <- function(input, output) {
       z <- ggplot2::ggplot(x$param, ggplot2::aes(x=by, y=bay, label=ba)) +
               ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) +
               ggplot2::xlab("$\\beta_Y$") + ggplot2::ylab("$\\beta_{AY}$") +
-              ggplot2::ggtitle(paste("$\\beta_A$=", input$num7)) +
+              ggplot2::ggtitle(paste0("Selection Effects giving rise to OR \n(bA=", input$num7, ")")) +
               ggplot2::geom_hline(yintercept=0, size=0.2) +
-              ggplot2::geom_vline(xintercept=0, size=0.2)
+              ggplot2::geom_vline(xintercept=0, size=0.2) +
+        theme(plot.title = element_text(hjust = 0.5))
     ggplotly(z)
     
     } else if(input$selection_class == "Outcome"){
       gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, c(input$num8, input$num8), input$num9)
+      print(gran)
+      
+      #x <- VBB$new
+      #> x$parameter_space(target_or=2, pS=0.03, pA=0.15, pAY=0, b0_range=c(-0.2,0.2), by_range=c(0.1, 0.1), bay_range=c(-0.2,0.2), granularity=(1000000^1/3))
+      
       x <- VBB$new()
       x$parameter_space(
         target_or=input$num1, 
@@ -301,10 +312,11 @@ server <- function(input, output) {
         bay_range=input$num9, 
         granularity=gran
       )
+      
       z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=bay, label=by)) +
         ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) +
         ggplot2::xlab("$\\beta_A$") + ggplot2::ylab("$\\beta_{AY}$") +
-        ggplot2::ggtitle(paste("$\\beta_Y$ =", input$num8)) +
+        ggplot2::ggtitle(title(paste("$\\beta_Y$ =", input$num8))) +
         ggplot2::geom_hline(yintercept=0, size=0.2) +
         ggplot2::geom_vline(xintercept=0, size=0.2)
       ggplotly(z)
