@@ -4,7 +4,7 @@ FROM rocker/shiny-verse:3.5.0
 
 MAINTAINER Gibran Hemani "g.hemani@bristol.ac.uk"
 
-RUN R -e "install.packages(c('shiny', 'shinydashboard', 'shinycssloaders'), repos='https://cran.rstudio.com/')"
+RUN R -e "install.packages(c('shiny', 'shinydashboard', 'shinycssloaders', 'latex2exp', 'plotly'), repos='https://cran.rstudio.com/')"
 
 ARG CACHE_DATE
 RUN sudo su - -c "R -e \"remotes::install_github('explodecomputer/AscRtain')\""

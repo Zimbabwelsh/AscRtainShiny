@@ -23,6 +23,6 @@ shiny::runGitHub("Zimbabwelsh/AscRtainShiny", subdir="app")
 Runs on the [rocker/shiny-verse](https://github.com/rocker-org/shiny) image.
 
 ```{r}
-docker-compose up -d
+docker-compose up -d --no-deps --build
 ```
 
