@@ -108,13 +108,13 @@ dashboardBody(
                      br(),br(),
                      em("Selection effects"), "are defined as follows:",
                     br(),br(),
-                    "\\(\\beta_0\\) denotes the baseline probability of being selected into the sample.",
+                    "\\(\\beta_0\\) denotes the baseline probability of selecting into the sample.",
                     br(),
-                    "\\(\\beta_A\\) is the differential effect on probability of being selected into the sample given A=1 is true.", 
+                    "\\(\\beta_A\\) is the difference in probability of selection into sample given A=1 is true.", 
                     br(),
-                    "\\(\\beta_0\\) is the differential effect on probability of being selected into the sample given Y=1 is true.", 
+                    "\\(\\beta_0\\) is the difference in probability of selection into sample given Y=1 is true.", 
                     br(),
-                    "\\(\\beta_{AY}\\) is the differential effect on probability of being selected into the sample given", em("both"), "A=1 and Y=1 are true."
+                    "\\(\\beta_{AY}\\) is the difference in probability of selection into sample given", em("both"), "A=1 and Y=1 are true."
                      
               ),
               column(3, h5("Observed Relationship"),
@@ -262,112 +262,113 @@ server <- function(input, output) {
       need(input$num1!=1, "Please select an Odds Ratio that implies difference")
     )
     
-    if(input$selection_class == "Exposure"){
-      
-      gran <- get_granularity((input$num10)*1000000, input$num6, c(input$num7, input$num7), input$num8, input$num9)
-      print(gran)
-      
+    # if(input$selection_class == "Exposure"){
+    #   gran <- get_granularity((input$num10)*1000000, input$num6, c(input$num7, input$num7), input$num8, input$num9)
+    #  
+    #   x <- VBB$new()
+    #   x$parameter_space(
+    #     target_or=input$num1, 
+    #     pS=input$num2, 
+    #     pA=input$num3,
+    #     pY=input$num4,
+    #     pAY=input$num5,
+    #     b0_range=input$num6, 
+    #     ba_range=c(input$num7,input$num7), 
+    #     by_range=input$num8, 
+    #     bay_range=input$num9, 
+    #     granularity=gran
+    #   )
+    #   output$params <- renderText(x$details$parameter_combinations)
+    #   output$pS <- renderText(x$details$within_ps_told)
+    #   output$or <-  renderText(x$details$beyond_or)
+    #   z <- ggplot2::ggplot(x$param, ggplot2::aes(x=by, y=bay, label=ba)) +
+    #           ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) +
+    #           ggplot2::xlab("$\\beta_Y$") + ggplot2::ylab("$\\beta_{AY}$") +
+    #           ggplot2::ggtitle(paste0("Selection Effects giving rise to OR \n(bA=", input$num7, ")")) +
+    #           ggplot2::geom_hline(yintercept=0, size=0.2) +
+    #           ggplot2::geom_vline(xintercept=0, size=0.2) +
+    #     theme(plot.title = element_text(hjust = 0.5))
+    # ggplotly(z)
+    # # 
+    #} else 
+      if(input$selection_class == "Outcome"){
+      gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, c(input$num8, input$num8), input$num9)
+      #x <- VBB$new
+      #> x$parameter_space(target_or=2, pS=0.03, pA=0.15, pAY=0, b0_range=c(-0.2,0.2), by_range=c(0.1, 0.1), bay_range=c(-0.2,0.2), granularity=(1000000^1/3))
+    
       x <- VBB$new()
       x$parameter_space(
-        target_or=input$num1, 
-        pS=input$num2, 
+        target_or=input$num1,
+        pS=input$num2,
         pA=input$num3,
         pY=input$num4,
         pAY=input$num5,
-        b0_range=input$num6, 
-        ba_range=c(input$num7,input$num7), 
-        by_range=input$num8, 
-        bay_range=input$num9, 
+        b0_range=input$num6,
+        ba_range=input$num7,
+        by_range=c(input$num8,input$num8),
+        bay_range=input$num9,
         granularity=gran
       )
       output$params <- renderText(x$details$parameter_combinations)
       output$pS <- renderText(x$details$within_ps_told)
       output$or <-  renderText(x$details$beyond_or)
-      z <- ggplot2::ggplot(x$param, ggplot2::aes(x=by, y=bay, label=ba)) +
-              ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) +
-              ggplot2::xlab("$\\beta_Y$") + ggplot2::ylab("$\\beta_{AY}$") +
-              ggplot2::ggtitle(paste0("Selection Effects giving rise to OR \n(bA=", input$num7, ")")) +
-              ggplot2::geom_hline(yintercept=0, size=0.2) +
-              ggplot2::geom_vline(xintercept=0, size=0.2) +
-        theme(plot.title = element_text(hjust = 0.5))
-    ggplotly(z)
-    
-    } else if(input$selection_class == "Outcome"){
-      gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, c(input$num8, input$num8), input$num9)
-      print(gran)
-      
-      #x <- VBB$new
-      #> x$parameter_space(target_or=2, pS=0.03, pA=0.15, pAY=0, b0_range=c(-0.2,0.2), by_range=c(0.1, 0.1), bay_range=c(-0.2,0.2), granularity=(1000000^1/3))
-      
-      x <- VBB$new()
-      x$parameter_space(
-        target_or=input$num1, 
-        pS=input$num2, 
-        pA=input$num3,
-        pY=input$num4,
-        pAY=input$num5,
-        b0_range=input$num6, 
-        ba_range=input$num7, 
-        by_range=c(input$num8,input$num8), 
-        bay_range=input$num9, 
-        granularity=gran
-      )
-      
+
       z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=bay, label=by)) +
         ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) +
         ggplot2::xlab("$\\beta_A$") + ggplot2::ylab("$\\beta_{AY}$") +
-        ggplot2::ggtitle(title(paste("$\\beta_Y$ =", input$num8))) +
+        ggplot2::ggtitle(paste0("Selection Effects giving rise to OR \n(bA=", input$num7, ")")) +
         ggplot2::geom_hline(yintercept=0, size=0.2) +
-        ggplot2::geom_vline(xintercept=0, size=0.2)
+        ggplot2::geom_vline(xintercept=0, size=0.2) +
+        theme(plot.title = element_text(hjust = 0.5))
       ggplotly(z)
-      
-    } else if (input$selection_class == "Interaction"){
-      gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, input$num8, c(input$num9,input$num9))
-      x <- VBB$new()
-      x$parameter_space(
-        target_or=input$num1, 
-        pS=input$num2, 
-        pA=input$num3,
-        pY=input$num4,
-        pAY=input$num5,
-        b0_range=input$num6, 
-        ba_range=input$num7, 
-        by_range=input$num8, 
-        bay_range=c(input$num9,input$num9), 
-        granularity=gran
-      )
-      z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by, label=bay)) +
-        ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) +
-        ggplot2::xlab("$\\beta_A$") + ggplot2::ylab("$\\beta_Y$") +
-        ggplot2::ggtitle(paste("$\\beta_{AY}$ =", input$num9)) +
-        ggplot2::geom_hline(yintercept=0, size=0.2) +
-        ggplot2::geom_vline(xintercept=0, size=0.2)
-      ggplotly(z)
-    } else {
-      gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, input$num8, input$num9)
-      x <- VBB$new()
-      x$parameter_space(
-        target_or=input$num1, 
-        pS=input$num2, 
-        pA=input$num3,
-        pY=input$num4,
-        pAY=input$num5,
-        b0_range=input$num6, 
-        ba_range=input$num7, 
-        by_range=input$num8, 
-        bay_range=input$num9, 
-        granularity=gran
-      )
-      z <- plot_ly(
-      x$param, x=ba, y=by, z=bay,
-      color = b0) %>% 
-      add_markers() %>% 
-        layout(
-          scene = list(xaxis=list(title = '$\\beta_A$'),
-                       yaxis=list(title = '$\\beta_Y$'),
-                       zaxis=list(title = '$\\beta_{AY}'))
-        )
-      ggplotly(z)
+
+    # } else if (input$selection_class == "Interaction"){
+    #   gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, input$num8, c(input$num9,input$num9))
+    #   x <- VBB$new()
+    #   x$parameter_space(
+    #     target_or=input$num1, 
+    #     pS=input$num2, 
+    #     pA=input$num3,
+    #     pY=input$num4,
+    #     pAY=input$num5,
+    #     b0_range=input$num6, 
+    #     ba_range=input$num7, 
+    #     by_range=input$num8, 
+    #     bay_range=c(input$num9,input$num9), 
+    #     granularity=gran
+    #   )
+    #   z <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by, label=bay)) +
+    #     ggplot2::geom_point(ggplot2::aes(colour=b0), size=0.5) +
+    #     ggplot2::xlab("$\\beta_A$") + ggplot2::ylab("$\\beta_Y$") +
+    #     ggplot2::ggtitle(paste("$\\beta_{AY}$ =", input$num9)) +
+    #     ggplot2::geom_hline(yintercept=0, size=0.2) +
+    #     ggplot2::geom_vline(xintercept=0, size=0.2)
+    #   ggplotly(z)
+    # } else {
+    #   gran <- get_granularity((input$num10)*1000000, input$num6, input$num7, input$num8, input$num9)
+    #   x <- VBB$new()
+    #   x$parameter_space(
+    #     target_or=input$num1, 
+    #     pS=input$num2, 
+    #     pA=input$num3,
+    #     pY=input$num4,
+    #     pAY=input$num5,
+    #     b0_range=input$num6, 
+    #     ba_range=input$num7, 
+    #     by_range=input$num8, 
+    #     bay_range=input$num9, 
+    #     granularity=gran
+    #   )
+    #   z <- plot_ly(
+    #   x$param, x=ba, y=by, z=bay,
+    #   color = b0) %>% 
+    #   add_markers() %>% 
+    #     layout(
+    #       scene = list(xaxis=list(title = '$\\beta_A$'),
+    #                    yaxis=list(title = '$\\beta_Y$'),
+    #                    zaxis=list(title = '$\\beta_{AY}'))
+    #     )
+    #   ggplotly(z)
       
       
   #    <- ggplot2::ggplot(x$param, ggplot2::aes(x=ba, y=by, label=bay)) +
