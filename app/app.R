@@ -3,6 +3,7 @@ library(shiny)
 library(shinycssloaders)
 library(latex2exp)
 library(plotly)
+library(markdown)
 library(AscRtain)
 
 get_granularity <- function(target, b0_range, ba_range, by_range, bay_range)
@@ -22,7 +23,7 @@ dashboardSidebar(
   sidebarMenu(
     menuItem("Theory", tabName="first", icon = icon("book-reader")),
     menuItem("Exploring Collider Bias", icon = icon("th"),
-             menuSubItem("Estimation", tabName="second", icon=icon("bar-chart-o")),
+             menuSubItem("Estimation", tabName="second", icon=icon("bar-chart")),
              menuSubItem("Under The Hood", tabName= "third", icon=icon("calculator"))),
     menuItem("Further Resources", tabName="fourth", icon=icon("book"))
     )
@@ -48,11 +49,12 @@ dashboardBody(
                        a(href="http://www.bristol.ac.uk/social-community-medicine/people/gibran-hemani/index.html", "Gibran Hemani"),
                        "and", a(href="http://www.research.lancs.ac.uk/portal/en/people/tom-palmer(79cb1052-8447-4d1b-8633-bf2a77b0a1e2).html", "Tom Palmer."),
                        br(), br(),
-                       "This", a(href="github.com/Zimbabwelsh/AscRtainShiny", "RShiny app"), "was created by",
-                        a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth Griffith"), "as a pedagogical supplement
-                        to the MedRxiv preprint", a(href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090506v1.full.pdf",
+                       "This app  was created by",
+                        a(href="http://www.bristol.ac.uk/geography/people/gareth-j-griffith/index.html", "Gareth J Griffith"), "as a pedagogical supplement
+                        to the Nature Communications article", a(href="https://www.nature.com/articles/s41467-020-19478-2",
                         "'Collider bias undermines our understanding of COVID-19 disease risk
-                        and severity.'"), "written with colleagues at the MRC-IEU, 2020.")
+                        and severity.'"), "written with colleagues at the MRC-IEU, 2020. The github repo for the app itself 
+                       is", a(href="https://github.com/Zimbabwelsh/AscRtainShiny/", "here."))
                    ),
             column(6,br(),
                    box(width=12,"Consider the scenario in which we want to test if a given exposure \\((A)\\) influences an outcome \\((Y)\\).
@@ -267,8 +269,8 @@ server <- function(input, output) {
               ggplot2::ggtitle("Selection Effects giving rise to Observed OR under a true null association") +
               ggplot2::labs(colour= "b0")
       
-      z <- z+geom_hline(yintercept=0,  size=0.2)
-      z <- z+geom_vline(xintercept = 0,  size=0.2)
+      z <- z+geom_hline(yintercept=0,  linewidth=0.2)
+      z <- z+geom_vline(xintercept = 0,  linewidth=0.2)
       
     ggplotly(z)#, tooltip = c("x$param$ba", "x$param$by", "x$param$b0", "x$param$bay"))        ,label=bay
     
