@@ -1,6 +1,8 @@
 # AscRtain.shiny
 
-This shiny app is a wrapper for functions in the https://github.com/explodecomputer/AscRtain. It is built on the work by Groenwold, Palmer and Tilling (2019) "Conditioning on a mediator" https://osf.io/vrcuf/, and is part of the Griffith et al. MRC-IEU authored Nature Communications paper "[Collider Bias undermines our understanding of COVID-19 disease risk and severity]( https://www.nature.com/articles/s41467-020-19478-2)" (2020). 
+This pedagogical shiny app is a wrapper for functions in the https://github.com/explodecomputer/AscRtain package.
+
+It builds on work by Groenwold, Palmer and Tilling (2019) "Conditioning on a mediator" https://osf.io/vrcuf/, and forms part of the  Nature Communications paper "[Collider Bias undermines our understanding of COVID-19 disease risk and severity]( https://www.nature.com/articles/s41467-020-19478-2)" (2020), authored by MRC-IEU colleagues. 
 
 ## To run
 
